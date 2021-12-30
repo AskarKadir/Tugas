@@ -18,38 +18,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class proesdata {    
     @RequestMapping("/prosesinput")
     public String inputanuser(HttpServletRequest data, Model buah){
-        String nbuah = data.getParameter("var_namabuah");
-        String hbuah = data.getParameter("var_hargakilo");
-        
-        Integer chbuah = Integer.valueOf(hbuah);
-        String jbuah = data.getParameter("var_jumlahbeli");
-        Double cjbuah = Double.valueOf(jbuah);
-        Double jumlahbayar = chbuah * cjbuah;
-        Double totalbayar = null;
-        Integer diskon = 0;
-        Double hargadiskon = 0.0;
-        
-        if(jumlahbayar < 16000){
-            totalbayar = jumlahbayar - (jumlahbayar*diskon/100);
-            hargadiskon = jumlahbayar*diskon/100;
-            
-        }else if(jumlahbayar < 25000){
-            diskon = 10;
-            totalbayar = jumlahbayar - (jumlahbayar*diskon/100);
-            hargadiskon = jumlahbayar*diskon/100;
-            
-        }else{
-            diskon = 15;
-            totalbayar = jumlahbayar - (jumlahbayar*diskon/100);
-            hargadiskon = jumlahbayar*diskon/100;
-        }
-        
-        buah.addAttribute("name",nbuah);
-        buah.addAttribute("price",chbuah);
-        buah.addAttribute("kilo",cjbuah);
+        dataproses dtproses = new dataproses();
+        //getting data
+        String namabuah = data.getParameter("var_namabuah");
+        String hargabuah = data.getParameter("var_hargakilo");        
+        String jumlahbuah = data.getParameter("var_jumlahbeli");
+        //import data from proccess then turn to variabel
+        Double convharga        = dtproses.newharga(hargabuah);
+        Double convjumlah       = dtproses.newjumlah(jumlahbuah);
+        Double jumlahbayar      = dtproses.newjumlahbayar(convharga, convjumlah);
+        String diskonpercent    = dtproses.diskon(jumlahbayar);
+        Double hargadiskon      = dtproses.newhargadiskon(jumlahbayar, Integer.valueOf(diskonpercent));
+        Double totalbayar       = dtproses.newtotalbayar(jumlahbayar, hargadiskon);
+        dtproses.math(jumlahbayar, Integer.valueOf(diskonpercent), totalbayar, hargadiskon);
+        //
+        buah.addAttribute("name", totalbayar);
+        buah.addAttribute("price", totalbayar);
+        buah.addAttribute("kilo",jumlahbuah);
         buah.addAttribute("tbayar",totalbayar); 
         buah.addAttribute("discountrp", hargadiskon);
-        buah.addAttribute("disc", diskon);
+        buah.addAttribute("disc", diskonpercent);
         buah.addAttribute("total0", jumlahbayar);
         return "AskarKadir";
     }

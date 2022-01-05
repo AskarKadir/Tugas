@@ -9,6 +9,8 @@ package Java.Tugas.Askar.Kadir;
  *
  * @author Asus
  */
+
+//Tugas Selesai
 public class dataproses {
     
     public Double newharga(String harga){
@@ -62,6 +64,17 @@ public class dataproses {
             diskon = 15;
             totalbayar = jumlahbayar - (jumlahbayar*diskon/100);
             hargadiskon = jumlahbayar*diskon/100;
+        }
+    }
+    
+    public String kembalianuang(Double UangCostumer,Double TotalBayar){
+        Double kembalian = UangCostumer - TotalBayar;
+        if(UangCostumer > TotalBayar){
+            return "Kembalian Anda Rp."+kembalian;
+        }else if(UangCostumer == TotalBayar){
+            return "Uang Anda Sudah Pas";
+        }else{
+            return "Uang Anda Tidak Cukup, Uang Anda Kurang Rp."+kembalian;
         }
     }
 }

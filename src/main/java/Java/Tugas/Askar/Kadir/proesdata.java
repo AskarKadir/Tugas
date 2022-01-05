@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class proesdata {    
-    @RequestMapping("/prosesinput")
+    @RequestMapping("/inputan")
     public String inputanuser(HttpServletRequest data, Model buah){
         dataproses dtproses = new dataproses();
         //getting data
@@ -32,7 +32,6 @@ public class proesdata {
         Double hargadiskon      = dtproses.newhargadiskon(jumlahbayar, Integer.valueOf(diskonpercent));
         Double totalbayar       = dtproses.newtotalbayar(jumlahbayar, hargadiskon);
         dtproses.math(jumlahbayar, Integer.valueOf(diskonpercent), totalbayar, hargadiskon);
-//
         buah.addAttribute("name", namabuah);
         buah.addAttribute("price", totalbayar);
         buah.addAttribute("kilo",jumlahbuah);
@@ -41,6 +40,6 @@ public class proesdata {
         buah.addAttribute("disc", diskonpercent);
         buah.addAttribute("total0", jumlahbayar);
         buah.addAttribute("kembalian", dtproses.kembalianuang(Double.valueOf(uangcostumer), totalbayar));
-        return "AskarKadir";
+        return "Askar";
     }
 }

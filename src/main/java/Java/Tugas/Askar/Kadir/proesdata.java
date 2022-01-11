@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -20,13 +20,13 @@ public class proesdata {
     public String inputanuser(HttpServletRequest data, Model buah){
         dataproses dtproses = new dataproses();
         //getting data
-        String namabuah = data.getParameter("var_namabuah");
-        String hargabuah = data.getParameter("var_hargakilo");        
-        String jumlahbuah = data.getParameter("var_jumlahbeli");
+        String namabuah = data.getParameter("var_namasayur");
+        String hargasayur = data.getParameter("var_hargakilo");        
+        String jumlahsayur = data.getParameter("var_jumlahbeli");
         String uangcostumer = data.getParameter("var_uangcostumer");
         //import data from proccess then turn to variabel
-        Double convharga        = dtproses.newharga(hargabuah);
-        Double convjumlah       = dtproses.newjumlah(jumlahbuah);
+        Double convharga        = dtproses.newharga(hargasayur);
+        Double convjumlah       = dtproses.newjumlah(jumlahsayur);
         Double jumlahbayar      = dtproses.newjumlahbayar(convharga, convjumlah);
         String diskonpercent    = dtproses.diskon(jumlahbayar);
         Double hargadiskon      = dtproses.newhargadiskon(jumlahbayar, Integer.valueOf(diskonpercent));
@@ -34,7 +34,7 @@ public class proesdata {
         dtproses.math(jumlahbayar, Integer.valueOf(diskonpercent), totalbayar, hargadiskon);
         buah.addAttribute("name", namabuah);
         buah.addAttribute("price", totalbayar);
-        buah.addAttribute("kilo",jumlahbuah);
+        buah.addAttribute("kilo",jumlahsayur);
         buah.addAttribute("tbayar",totalbayar); 
         buah.addAttribute("discountrp", hargadiskon);
         buah.addAttribute("disc", diskonpercent);
